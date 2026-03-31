@@ -1,6 +1,62 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
+const TOTAL = 5 * 60;
+
 export default function AboutPage() {
+  const [seconds, setSeconds] = useState(TOTAL);
+  const [showMessage, setShowMessage] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSeconds((s) => {
+        if (s <= 1) {
+          setShowMessage(true);
+          setTimeout(() => {
+            setShowMessage(false);
+            setSeconds(TOTAL);
+          }, 2000);
+          return 0;
+        }
+        return s - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const mins = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  const display = `${mins}:${String(secs).padStart(2, "0")}`;
+
   return (
-    <div className="w-full pt-16 text-left md:pt-24 lg:pt-28 pr-[min(28vw,14rem)] md:pr-[min(32vw,16rem)] pb-8">
+    <div className="w-full pt-16 text-left md:pt-24 lg:pt-28 pr-[min(28vw,14rem)] md:pr-[min(32vw,16rem)] pb-8 relative">
+
+      {/* Countdown clock — fixed to right side */}
+      <div className="fixed right-0 top-0 h-full flex flex-col items-center justify-center w-[min(28vw,14rem)] md:w-[min(32vw,16rem)] pointer-events-none select-none">
+        <div
+          style={{
+            fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
+            fontVariantNumeric: "tabular-nums",
+            letterSpacing: "-0.02em",
+            lineHeight: 1,
+          }}
+        >
+          {display}
+        </div>
+        <div
+          style={{
+            fontSize: "9px",
+            letterSpacing: "0.08em",
+            marginTop: "10px",
+            opacity: showMessage ? 1 : 0,
+            transition: "opacity 0.3s",
+          }}
+        >
+          THANK YOU FOR YOUR PATIENCE
+        </div>
+      </div>
+
       <div className="max-w-[486px]">
         <div>
         <div className="mb-3 opacity-40">ABOUT</div>
