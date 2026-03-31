@@ -1,0 +1,89 @@
+"use client";
+
+import { useEffect, useCallback } from "react";
+import MuxPlayer from "@mux/mux-player-react";
+import { Work } from "@/data/works";
+
+interface WorkModalProps {
+  work: Work;
+  onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+  hasPrev: boolean;
+  hasNext: boolean;
+}
+
+export function WorkModal({
+  work,
+  onClose,
+  onPrev,
+  onNext,
+  hasPrev,
+  hasNext,
+}: WorkModalProps) {
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowLeft" && hasPrev) onPrev();
+      if (e.key === "ArrowRight" && hasNext) onNext();
+    },
+    [onClose, onPrev, onNext, hasPrev, hasNext]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "";
+    };
+  }, [handleKeyDown]);
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black">
+      {/* Header */}
+      <div className="absolute top-0 left-0 right-0 flex items-start justify-between p-[15px] text-white z-10">
+        <div className="text-[8px] tracking-[0.045em]">
+          <span className="font-bold">{work.client}</span>
+          <span className="font-bold"> | </span>
+          <span className="font-normal">{work.title}</span>
+        </div>
+        <button
+          onClick={onClose}
+          className="opacity-40 transition-opacity duration-300 hover:opacity-100"
+        >
+          [ CLOSE ]
+        </button>
+      </div>
+
+      {/* Navigation arrows */}
+      {hasPrev && (
+        <button
+          onClick={onPrev}
+          className="absolute left-[15px] top-1/2 -translate-y-1/2 text-[20px] text-white opacity-40 transition-opacity duration-300 hover:opacity-100 z-10"
+        >
+          &lt;
+        </button>
+      )}
+      {hasNext && (
+        <button
+          onClick={onNext}
+          className="absolute right-[15px] top-1/2 -translate-y-1/2 text-[20px] text-white opacity-40 transition-opacity duration-300 hover:opacity-100 z-10"
+        >
+          &gt;
+        </button>
+      )}
+
+      {/* Video */}
+      <div className="w-full max-w-[900px] px-[60px]">
+        <MuxPlayer
+          key={work.muxPlaybackId}
+          playbackId={work.muxPlaybackId}
+          autoPlay
+          accentColor="#ffffff"
+          style={{ aspectRatio: "16/9", width: "100%" }}
+        />
+      </div>
+    </div>
+  );
+}

@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --font-sans: "General Sans", -apple-system, "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --bg: #ffffff;
+  --text: #000000;
+  --muted: #999999;
+  --speed: 300ms;
+  --ease: cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+:root.dark {
+  --bg: #0a0a0a;
+  --text: #e5e5e5;
+  --muted: #666666;
+}
+
+/* Must live in @layer base so Tailwind utilities (e.g. main px-*, mx-auto) win. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  letter-spacing: 0.08em;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: calc(13px * (18 / 13));
+  text-transform: uppercase;
+  transition: background var(--speed) var(--ease), color var(--speed) var(--ease);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 0.5;
+  transition: opacity var(--speed) var(--ease);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Selection */
+::selection {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* Work card hover: fast smear motion + backdrop pulse (see WorkCard) */
+@keyframes chroma-smear-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(7%, -6%) scale(1.12);
+  }
+}
+
+@keyframes chroma-smear-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1.04);
+  }
+  50% {
+    transform: translate(-8%, 7%) scale(0.9);
+  }
+}
+
+@keyframes chroma-backdrop-pulse {
+  0%,
+  100% {
+    opacity: 0.58;
+  }
+  50% {
+    opacity: 1;
+  }
+}
