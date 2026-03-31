@@ -34,7 +34,7 @@ export default function AboutPage() {
             this instrument that is always running, always taking readings, always asking whether
             the thing in front of you is real or whether it is performing realness, and those are
             not the same thing, they are never the same thing, and once you know the difference you
-            cannot unknow it.
+            cannot unknow&nbsp;it.
           </p>
           <p>
             I care about honesty the way some people care about religion. I don&apos;t mean that in
@@ -144,8 +144,9 @@ export default function AboutPage() {
             enough and it was always worth it.
           </p>
           <p>
-            I&apos;m from Butte, Montana, and I believe in short attention spans, and I have spent
-            my entire life doing something in midair that holds one long enough to matter. I think I
+            I have spent my entire life doing something in midair in an attempt to hold one&apos;s
+            attention long enough to matter.
+            I think I
             got there a few times. In front of the right people. In a white suit. Going very fast.
             That&apos;s the whole story.
           </p>
