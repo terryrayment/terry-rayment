@@ -34,7 +34,7 @@ export default function RootLayout({
       </head>
       <body>
         <Nav />
-        <main className="mx-auto w-full max-w-[2400px] px-4 sm:px-6 md:px-10 lg:px-16 xl:px-24 2xl:px-[140px]">
+        <main className="mx-auto w-full max-w-[2400px] px-[1.69rem] sm:px-[2.535rem] md:px-[4.225rem] lg:px-[6.76rem] xl:px-[10.14rem] 2xl:px-[237px]">
           {children}
         </main>
         <ThemeToggle />

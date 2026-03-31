@@ -10,7 +10,7 @@ export function WorkGrid() {
 
   return (
     <>
-      <div className="my-6 grid grid-cols-1 gap-x-2 gap-y-4 sm:grid-cols-2 sm:gap-x-3 sm:gap-y-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="my-6 grid grid-cols-1 gap-x-0.5 gap-y-1 sm:grid-cols-2 sm:gap-x-[3px] sm:gap-y-[5px] md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {works.map((work, i) => (
           <WorkCard
             key={work.muxPlaybackId}

@@ -186,7 +186,7 @@ export const works: Work[] = [
     title: "WORRIED SICK",
     category: "COMMERCIAL",
     muxPlaybackId: "buS5LOZv9jL656A00gBKIwv8UbYmFvXtofFiK01xQgIj8",
-    scale: 1.28,
+    scale: 1.344,
   },
   {
     id: "w022",
