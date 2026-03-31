@@ -2,7 +2,7 @@
 
 import { useEffect, useCallback } from "react";
 import MuxPlayer from "@mux/mux-player-react";
-import { Work } from "@/data/works";
+import { workMediaKey, type Work } from "@/data/works";
 
 interface WorkModalProps {
   work: Work;
@@ -11,6 +11,7 @@ interface WorkModalProps {
   onNext: () => void;
   hasPrev: boolean;
   hasNext: boolean;
+  variant?: "hire" | "fun";
 }
 
 export function WorkModal({
@@ -20,6 +21,7 @@ export function WorkModal({
   onNext,
   hasPrev,
   hasNext,
+  variant = "hire",
 }: WorkModalProps) {
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -44,9 +46,15 @@ export function WorkModal({
       {/* Header */}
       <div className="absolute top-0 left-0 right-0 flex items-start justify-between p-[15px] text-white z-10">
         <div className="text-[8px] tracking-[0.045em]">
-          <span className="font-bold">{work.client}</span>
-          <span className="font-bold"> | </span>
-          <span className="font-normal">{work.title}</span>
+          {variant === "fun" ? (
+            <span className="font-normal">{work.title}</span>
+          ) : (
+            <>
+              <span className="font-bold">{work.client}</span>
+              <span className="font-bold"> | </span>
+              <span className="font-normal">{work.title}</span>
+            </>
+          )}
         </div>
         <button
           onClick={onClose}
@@ -74,15 +82,35 @@ export function WorkModal({
         </button>
       )}
 
-      {/* Video */}
-      <div className="w-full max-w-[900px] px-[60px]">
-        <MuxPlayer
-          key={work.muxPlaybackId}
-          playbackId={work.muxPlaybackId}
-          autoPlay
-          accentColor="#ffffff"
-          style={{ aspectRatio: "16/9", width: "100%" }}
-        />
+      {/* Video + optional description */}
+      <div className="flex max-h-[calc(100dvh-3.5rem)] w-full max-w-[900px] flex-col items-stretch overflow-y-auto px-[60px] pb-8 pt-14">
+        {work.muxPlaybackId ? (
+          <MuxPlayer
+            key={work.muxPlaybackId}
+            playbackId={work.muxPlaybackId}
+            autoPlay
+            accentColor="#ffffff"
+            style={{ aspectRatio: "16/9", width: "100%" }}
+          />
+        ) : work.vimeoVideoId ? (
+          <div
+            key={workMediaKey(work)}
+            className="aspect-video w-full shrink-0 overflow-hidden bg-black"
+          >
+            <iframe
+              title={work.title}
+              src={`https://player.vimeo.com/video/${work.vimeoVideoId}?autoplay=1`}
+              className="h-full w-full border-0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
+        ) : null}
+        {work.lightboxDescription ? (
+          <p className="mt-10 w-[min(35vw,100%)] self-start whitespace-pre-line text-left text-[11px] font-normal leading-[1.65] tracking-normal text-white/80 normal-case">
+            {work.lightboxDescription}
+          </p>
+        ) : null}
       </div>
     </div>
   );

@@ -1,9 +1,12 @@
 #!/bin/bash
 # Upload Terry Rayment portfolio videos to Mux via URL ingest
-# Mux will download directly from Wiredrive
+# Mux will download directly from each URL (must be a direct media file, not a Vimeo page).
+#
+#   export MUX_TOKEN_ID=...
+#   export MUX_TOKEN_SECRET=...
 
-MUX_TOKEN_ID="b8445c70-9a8b-4659-ae3b-40a554eb3e99"
-MUX_TOKEN_SECRET="6u8HQttGYC7piX/fRNEpzEdJOJEanitZpR71kjF6BUlqyuh7fiTB0CtDjJ7ITAOVqCvkM7ClKzV"
+: "${MUX_TOKEN_ID:?Set MUX_TOKEN_ID (Mux dashboard)}"
+: "${MUX_TOKEN_SECRET:?Set MUX_TOKEN_SECRET}"
 
 # Output file to collect results
 OUTPUT_FILE="$(dirname "$0")/mux-results.json"

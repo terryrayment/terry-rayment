@@ -2,7 +2,7 @@
 
 import MuxVideo from "@mux/mux-video-react";
 import { useEffect, useMemo, useState } from "react";
-import { Work } from "@/data/works";
+import { workMediaKey, type Work } from "@/data/works";
 
 /** Slight zoom for masters with baked-in 2.39 letterboxing inside a 16:9 frame. */
 const DEFAULT_COVER_ZOOM = 1.22;
@@ -63,14 +63,15 @@ function incrementTc(
 interface WorkCardProps {
   work: Work;
   onClick: () => void;
+  variant?: "hire" | "fun";
 }
 
-export function WorkCard({ work, onClick }: WorkCardProps) {
+export function WorkCard({ work, onClick, variant = "hire" }: WorkCardProps) {
   const zoom = work.scale ?? DEFAULT_COVER_ZOOM;
   const scaled = Math.abs(zoom - 1) > 0.001;
   const meta = useMemo(
-    () => workprintMeta(work.muxPlaybackId),
-    [work.muxPlaybackId]
+    () => workprintMeta(workMediaKey(work)),
+    [work.muxPlaybackId, work.vimeoVideoId, work.id]
   );
   const [liveTc, setLiveTc] = useState(meta.tc);
   const [tcEngaged, setTcEngaged] = useState(false);
@@ -91,17 +92,10 @@ export function WorkCard({ work, onClick }: WorkCardProps) {
     return () => window.clearInterval(id);
   }, [tcEngaged, meta.tc]);
 
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      onMouseEnter={() => setTcEngaged(true)}
-      onMouseLeave={() => setTcEngaged(false)}
-      onFocus={() => setTcEngaged(true)}
-      onBlur={() => setTcEngaged(false)}
-      className="group/work w-full text-left outline-none ring-offset-2 ring-offset-[var(--bg)] focus-visible:ring-1 focus-visible:ring-[var(--text)]"
-    >
-      <div className="relative aspect-video w-full overflow-hidden bg-black">
+  const isFun = variant === "fun";
+
+  const videoFrame = (
+    <div className="relative aspect-video w-full overflow-hidden rounded-[3px] bg-black">
         <div
           className="absolute inset-0 origin-center"
           style={
@@ -113,14 +107,23 @@ export function WorkCard({ work, onClick }: WorkCardProps) {
               : undefined
           }
         >
-          <MuxVideo
-            playbackId={work.muxPlaybackId}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="block h-full w-full object-cover object-center"
-          />
+          {work.muxPlaybackId ? (
+            <MuxVideo
+              playbackId={work.muxPlaybackId}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="block h-full w-full object-cover object-center"
+            />
+          ) : work.vimeoVideoId ? (
+            <iframe
+              title=""
+              src={`https://player.vimeo.com/video/${work.vimeoVideoId}?background=1&autoplay=1&loop=1&muted=1&playsinline=1`}
+              className="pointer-events-none absolute inset-0 h-full w-full border-0 object-cover"
+              allow="autoplay; fullscreen; picture-in-picture"
+            />
+          ) : null}
         </div>
 
         {/* #4 Chroma: blurred backdrop = hues from the video; neutral blobs = fast abstract motion only */}
@@ -163,10 +166,41 @@ export function WorkCard({ work, onClick }: WorkCardProps) {
           <div className="mt-px opacity-75">REEL {meta.reel}</div>
         </div>
       </div>
-      <div className="mt-1.5 text-[8px] leading-tight tracking-[0.045em] text-[var(--text)]">
-        <span className="font-bold">{work.client}</span>
-        <span className="font-bold"> | </span>
-        <span className="font-normal">{work.title}</span>
+  );
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      onMouseEnter={() => setTcEngaged(true)}
+      onMouseLeave={() => setTcEngaged(false)}
+      onFocus={() => setTcEngaged(true)}
+      onBlur={() => setTcEngaged(false)}
+      className={`group/work w-full outline-none ring-offset-2 ring-offset-[var(--bg)] focus-visible:ring-1 focus-visible:ring-[var(--text)] ${
+        isFun ? "flex w-full flex-col items-center text-center" : "text-left"
+      }`}
+    >
+      {isFun ? (
+        <div className="mx-auto w-full max-w-[min(100%,34rem)]">
+          {videoFrame}
+        </div>
+      ) : (
+        videoFrame
+      )}
+      <div
+        className={`mt-1.5 text-[8px] leading-tight tracking-[0.045em] text-[var(--text)] ${
+          isFun ? "w-full text-center" : ""
+        }`}
+      >
+        {isFun ? (
+          <span className="font-normal">{work.title}</span>
+        ) : (
+          <>
+            <span className="font-bold">{work.client}</span>
+            <span className="font-bold"> | </span>
+            <span className="font-normal">{work.title}</span>
+          </>
+        )}
       </div>
     </button>
   );

@@ -7,19 +7,18 @@ export function Nav() {
   const pathname = usePathname();
 
   const links = [
-    { href: "/", label: "WORK", key: "works" },
-    { href: "/about", label: "ABOUT", key: "about" },
+    { href: "/", label: "FOR HIRE", key: "hire" },
+    { href: "/fun", label: "FOR FUN", key: "fun" },
+    { href: "/about", label: "INFO", key: "info" },
   ];
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
-    return pathname.startsWith(href);
+    return pathname === href || pathname.startsWith(`${href}/`);
   };
 
   return (
-    <nav className="sticky top-0 z-50 flex items-center justify-center border-b border-[var(--text)] bg-[var(--bg)] transition-colors duration-300"
-      style={{ borderBottomWidth: "0.5px", opacity: 0.999 }}
-    >
+    <nav className="sticky top-0 z-50 flex items-center justify-center bg-[var(--bg)] pt-[30px] transition-colors duration-300">
       {links.map((link, i) => (
         <div key={link.key} className="flex items-center">
           {i > 0 && (
