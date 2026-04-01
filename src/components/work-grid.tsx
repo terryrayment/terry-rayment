@@ -36,7 +36,7 @@ export function WorkGrid({ works: items, variant = "hire" }: WorkGridProps) {
   return (
     <>
       {variant === "hire" && (
-        <div className="flex gap-[20px] mb-2">
+        <div className="flex justify-center gap-[20px] mb-2">
           {filters.map((f) => (
             <button
               key={f.value}
