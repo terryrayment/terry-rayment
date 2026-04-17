@@ -7,6 +7,7 @@ const TOTAL = 5 * 60;
 export default function AboutPage() {
   const [seconds, setSeconds] = useState(TOTAL);
   const [showMessage, setShowMessage] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -25,6 +26,17 @@ export default function AboutPage() {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(docHeight > 0 ? Math.min(1, scrollTop / docHeight) : 0);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const mins = Math.floor(seconds / 60);
   const secs = seconds % 60;
   const display = `${mins}:${String(secs).padStart(2, "0")}`;
@@ -32,28 +44,49 @@ export default function AboutPage() {
   return (
     <div className="w-full pt-16 text-left md:pt-24 lg:pt-28 pr-[min(28vw,14rem)] md:pr-[min(32vw,16rem)] pb-8 relative">
 
-      {/* Countdown clock — fixed to right side */}
-      <div className="fixed right-0 top-0 h-full flex flex-col items-center justify-center w-[min(28vw,14rem)] md:w-[min(32vw,16rem)] pointer-events-none select-none">
-        <div
-          style={{
-            fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
-            fontVariantNumeric: "tabular-nums",
-            letterSpacing: "-0.02em",
-            lineHeight: 1,
-          }}
-        >
-          {display}
+      {/* Right panel — photo at top, clock centered below */}
+      <div className="fixed right-0 top-0 h-full flex flex-col items-center w-[min(28vw,14rem)] md:w-[min(32vw,16rem)] pointer-events-none select-none">
+
+        {/* Stacked photos: Before always visible, After fades in on scroll */}
+        <div className="relative w-full">
+          <img
+            src="/Terry_Before.png"
+            alt=""
+            className="w-full block"
+            draggable={false}
+          />
+          <img
+            src="/Terry_After.png"
+            alt=""
+            className="absolute inset-0 w-full block"
+            draggable={false}
+            style={{ opacity: scrollProgress, transition: "opacity 0.1s linear" }}
+          />
         </div>
-        <div
-          style={{
-            fontSize: "9px",
-            letterSpacing: "0.08em",
-            marginTop: "10px",
-            opacity: showMessage ? 1 : 0,
-            transition: "opacity 0.3s",
-          }}
-        >
-          THANK YOU FOR YOUR PATIENCE
+
+        {/* Clock */}
+        <div className="flex-1 flex flex-col items-center justify-center">
+          <div
+            style={{
+              fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
+              fontVariantNumeric: "tabular-nums",
+              letterSpacing: "-0.02em",
+              lineHeight: 1,
+            }}
+          >
+            {display}
+          </div>
+          <div
+            style={{
+              fontSize: "9px",
+              letterSpacing: "0.08em",
+              marginTop: "10px",
+              opacity: showMessage ? 1 : 0,
+              transition: "opacity 0.3s",
+            }}
+          >
+            THANK YOU FOR YOUR PATIENCE
+          </div>
         </div>
       </div>
 
