@@ -44,40 +44,25 @@ export default function AboutPage() {
   return (
     <div className="w-full pt-16 text-left md:pt-24 lg:pt-28 pr-[min(28vw,14rem)] md:pr-[min(32vw,16rem)] pb-8 relative">
 
-      {/* Photos — fixed top-right, independent of clock */}
-      <div
-        className="fixed top-0 right-0 pointer-events-none select-none"
-        style={{ width: "min(28vw, 14rem)", maxWidth: "224px" }}
-      >
+      {/* Photos — fixed top-right */}
+      <div className="fixed top-0 right-0 w-[min(28vw,14rem)] md:w-[min(32vw,16rem)] overflow-hidden pointer-events-none select-none">
         <div className="relative w-full">
           <img
             src="/Terry_Before.png"
             alt=""
-            draggable={false}
-            style={{ display: "block", width: "100%", height: "auto" }}
+            className="block w-full h-auto"
           />
           <img
             src="/Terry_After.png"
             alt=""
-            draggable={false}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "top",
-              display: "block",
-              opacity: scrollProgress,
-              transition: "opacity 0.1s linear",
-            }}
+            className="absolute inset-0 block w-full h-full object-cover object-top"
+            style={{ opacity: scrollProgress, transition: "opacity 0.15s linear" }}
           />
         </div>
       </div>
 
       {/* Clock — fixed right, centered vertically */}
-      <div className="fixed right-0 top-0 h-full flex flex-col items-center justify-center pointer-events-none select-none" style={{ width: "min(28vw, 14rem)", maxWidth: "224px" }}>
+      <div className="fixed right-0 top-0 h-full flex flex-col items-center justify-center w-[min(28vw,14rem)] md:w-[min(32vw,16rem)] pointer-events-none select-none">
           <div
             style={{
               fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
