@@ -7,17 +7,37 @@ interface IntroProps {
 }
 
 export function Intro({ onComplete }: IntroProps) {
+  // Starts as a solid cover. After sessionStorage check, either
+  // runs the full sequence or dissolves immediately.
   const [showImage, setShowImage] = useState(false);
   const [showText, setShowText] = useState(false);
   const [fadeOut, setFadeOut] = useState(false);
+  const [gone, setGone] = useState(false);
 
   useEffect(() => {
+    const seen = !!sessionStorage.getItem("introSeen");
+
+    if (seen) {
+      // Skip intro — dissolve the cover instantly, reveal grid
+      setGone(true);
+      onComplete();
+      return;
+    }
+
+    // Full sequence
     const t0 = setTimeout(() => setShowImage(true), 80);
     const t1 = setTimeout(() => setShowText(true), 700);
     const t2 = setTimeout(() => setFadeOut(true), 2300);
-    const t3 = setTimeout(() => onComplete(), 3000);
+    const t3 = setTimeout(() => {
+      sessionStorage.setItem("introSeen", "1");
+      setGone(true);
+      onComplete();
+    }, 3100);
+
     return () => { clearTimeout(t0); clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, [onComplete]);
+
+  if (gone) return null;
 
   return (
     <div
