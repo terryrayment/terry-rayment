@@ -18,8 +18,9 @@ export interface Work {
   scale?: number;
   /** Optional copy shown under the video in the modal lightbox. */
   lightboxDescription?: string;
-  /** Duration category for filtering on the hire grid. */
-  duration?: "short" | "long";
+  /** Duration category for filtering on the hire grid.
+   *  short = under 31s, medium = 31s–2min, long = over 2min */
+  duration?: "short" | "medium" | "long";
 }
 
 export const works: Work[] = [
@@ -39,7 +40,7 @@ export const works: Work[] = [
     category: "BRANDED CONTENT",
     muxPlaybackId: "cs5OTwrwIUIFNQ5biC4vQ4cFmzW01DnJbNC4HUWVposs",
     scale: 1.28,
-    duration: "long",
+    duration: "medium",
   },
   {
     id: "w003",
@@ -102,7 +103,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "KXBS8OV922qXXtK702shuikvTBkMfTvmnL00ewTKpfVQc",
     scale: 1,
-    duration: "long",
+    duration: "short",
   },
   {
     id: "w008",
@@ -183,7 +184,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "97vBJI8mqdUOc02701spysvjDSFtMwPIbhTiQ9b700l1DM",
     scale: 1.34,
-    duration: "long",
+    duration: "medium",
   },
   {
     id: "w017",

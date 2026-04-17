@@ -5,7 +5,7 @@ import { workMediaKey, type Work } from "@/data/works";
 import { WorkCard } from "./work-card";
 import { WorkModal } from "./work-modal";
 
-type DurationFilter = "all" | "short" | "long";
+type DurationFilter = "all" | "short" | "medium" | "long";
 
 interface WorkGridProps {
   works: Work[];
@@ -30,6 +30,7 @@ export function WorkGrid({ works: items, variant = "hire" }: WorkGridProps) {
   const filters: { label: string; value: DurationFilter }[] = [
     { label: "ALL", value: "all" },
     { label: "SHORT", value: "short" },
+    { label: "MEDIUM", value: "medium" },
     { label: "LONG", value: "long" },
   ];
 
