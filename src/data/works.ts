@@ -58,7 +58,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "dJR76vWL8XwefB02o7KHp6EtDDi71cTnHbFwLMxTeGIw",
     scale: 1.56,
-    duration: "long",
+    duration: "medium",
   },
   {
     id: "w005",
@@ -94,7 +94,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "qFUqNSbWcJWOn2ghnpUYk3004VPnD1I01VakBBPeNbY9E",
     scale: 1.7,
-    duration: "long",
+    duration: "medium",
   },
   {
     id: "w007",
@@ -130,7 +130,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "7GShwC8qj1MjXV022iNoCLEvVoEE2Y02HhoVWAQDfLsws",
     scale: 1.32,
-    duration: "long",
+    duration: "medium",
   },
   {
     id: "w011",
@@ -139,7 +139,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "00Rm00tx7vn7haH3kPG01lEyCjaxAzuI12IDdA30155mL900",
     scale: 1.386,
-    duration: "long",
+    duration: "short",
   },
   {
     id: "w012",
@@ -166,7 +166,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "OA01M6tdnkcqODv4kEp3Y7nnunQGINft93dovegKVhaw",
     scale: 1.34,
-    duration: "long",
+    duration: "short",
   },
   {
     id: "w015",
@@ -175,7 +175,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "68xG8fY8kLa8mVI85Xqa1OKqO7IzSVzkFBXCCFDfbYg",
     scale: 1.34,
-    duration: "long",
+    duration: "short",
   },
   {
     id: "w016",
@@ -229,7 +229,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "JZwMHJvCYuGldKyb167i92B529yCTj02jWfAyxJKge100",
     scale: 1,
-    duration: "long",
+    duration: "medium",
   },
   {
     id: "w023",
@@ -278,7 +278,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "U532tmfcXcvaIzsyuWihiCJigayY4AAfIHU7SMXg5u00",
     scale: 1.4,
-    duration: "long",
+    duration: "medium",
   },
   {
     id: "w029",
