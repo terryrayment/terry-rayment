@@ -76,7 +76,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "admC00b4MqZ3BTb1TLngnuOIxFbbS9lKGNc2MmlDgRiA",
     scale: 1,
-    duration: "long",
+    duration: "short",
   },
   {
     id: "w005",
@@ -85,7 +85,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "MglFqaTUc5vrvSjeZRA7fyQX7rW7zdIWexyhG0200sS64",
     scale: 1.44,
-    duration: "long",
+    duration: "medium",
   },
   {
     id: "w006",
