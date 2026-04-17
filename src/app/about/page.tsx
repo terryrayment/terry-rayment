@@ -44,11 +44,11 @@ export default function AboutPage() {
   return (
     <div className="w-full pt-16 text-left md:pt-24 lg:pt-28 pr-[min(28vw,14rem)] md:pr-[min(32vw,16rem)] pb-8 relative">
 
-      {/* Photo panel — fixed top-right with margin */}
+      {/* Photo panel — fixed top-right, top aligned with ABOUT label */}
       <div
+        className="top-16 md:top-24 lg:top-28"
         style={{
           position: "fixed",
-          top: "8rem",
           right: "1.5rem",
           width: "180px",
           height: "180px",
