@@ -8,21 +8,23 @@ function ScratchText({ children }: { children: React.ReactNode }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const scratchingRef = useRef(false);
-  const [done, setDone] = useState(false);
+  const initializedRef = useRef(false);
+  const doneRef = useRef(false);
+  const [fadeOut, setFadeOut] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
-  useEffect(() => {
-    if (done) return;
+  const initCanvas = () => {
+    if (initializedRef.current) return;
     const canvas = canvasRef.current;
     const container = containerRef.current;
     if (!canvas || !container) return;
 
     const rect = container.getBoundingClientRect();
-    canvas.width = Math.ceil(rect.width) + 8;
-    canvas.height = Math.ceil(rect.height) + 8;
+    const pad = 10;
+    canvas.width = Math.ceil(rect.width) + pad * 2;
+    canvas.height = Math.ceil(rect.height) + pad * 2;
 
     const ctx = canvas.getContext("2d")!;
-
-    // Resolve --bg to its actual computed color
     const tmp = document.createElement("div");
     tmp.style.cssText = "background:var(--bg);position:fixed;visibility:hidden;width:1px;height:1px";
     document.body.appendChild(tmp);
@@ -31,57 +33,78 @@ function ScratchText({ children }: { children: React.ReactNode }) {
 
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-  }, [done]);
+    initializedRef.current = true;
+  };
 
   const scratch = (x: number, y: number) => {
+    if (doneRef.current) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d")!;
-    ctx.globalCompositeOperation = "destination-out";
-    ctx.beginPath();
-    ctx.arc(x, y, 18, 0, Math.PI * 2);
-    ctx.fill();
 
-    // Auto-complete if >55% scratched
+    ctx.globalCompositeOperation = "destination-out";
+    // Soft brush: blur + slightly randomised ellipse
+    ctx.filter = "blur(5px)";
+    ctx.beginPath();
+    ctx.ellipse(
+      x, y,
+      26 + Math.random() * 6,
+      14 + Math.random() * 6,
+      Math.random() * Math.PI,
+      0, Math.PI * 2
+    );
+    ctx.fill();
+    ctx.filter = "none";
+
+    // Check coverage every few strokes (cheap sampling)
     const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
     let cleared = 0;
-    for (let i = 3; i < data.length; i += 4) {
+    for (let i = 3; i < data.length; i += 16) {
       if (data[i] < 50) cleared++;
     }
-    if (cleared / (canvas.width * canvas.height) > 0.55) {
-      setDone(true);
+    if (cleared / (canvas.width * canvas.height / 4) > 0.6) {
+      doneRef.current = true;
+      setFadeOut(true);
+      setTimeout(() => setHidden(true), 500);
     }
   };
 
-  if (done) {
-    return (
-      <span style={{ fontSize: "9px", letterSpacing: "0.18em", opacity: 0.5, display: "block", marginBottom: "4px", userSelect: "none" }}>
-        {children}
-      </span>
-    );
-  }
-
   return (
-    <div ref={containerRef} style={{ position: "relative", display: "inline-block", marginBottom: "4px" }}>
+    <div
+      ref={containerRef}
+      style={{ position: "relative", display: "inline-block", marginBottom: "4px" }}
+    >
       <span style={{ fontSize: "9px", letterSpacing: "0.18em", opacity: 0.5, display: "block", userSelect: "none" }}>
         {children}
       </span>
-      <canvas
-        ref={canvasRef}
-        style={{ position: "absolute", top: "-4px", left: "-4px", cursor: "crosshair" }}
-        onMouseDown={(e) => {
-          scratchingRef.current = true;
-          const rect = e.currentTarget.getBoundingClientRect();
-          scratch(e.clientX - rect.left, e.clientY - rect.top);
-        }}
-        onMouseUp={() => { scratchingRef.current = false; }}
-        onMouseLeave={() => { scratchingRef.current = false; }}
-        onMouseMove={(e) => {
-          if (!scratchingRef.current) return;
-          const rect = e.currentTarget.getBoundingClientRect();
-          scratch(e.clientX - rect.left, e.clientY - rect.top);
-        }}
-      />
+      {!hidden && (
+        <canvas
+          ref={canvasRef}
+          style={{
+            position: "absolute",
+            top: "-10px",
+            left: "-10px",
+            cursor: "crosshair",
+            opacity: fadeOut ? 0 : 1,
+            transition: "opacity 0.5s ease",
+            pointerEvents: fadeOut ? "none" : "auto",
+          }}
+          onMouseEnter={initCanvas}
+          onMouseDown={(e) => {
+            initCanvas();
+            scratchingRef.current = true;
+            const rect = e.currentTarget.getBoundingClientRect();
+            scratch(e.clientX - rect.left, e.clientY - rect.top);
+          }}
+          onMouseUp={() => { scratchingRef.current = false; }}
+          onMouseLeave={() => { scratchingRef.current = false; }}
+          onMouseMove={(e) => {
+            if (!scratchingRef.current) return;
+            const rect = e.currentTarget.getBoundingClientRect();
+            scratch(e.clientX - rect.left, e.clientY - rect.top);
+          }}
+        />
+      )}
     </div>
   );
 }
