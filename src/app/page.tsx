@@ -1,6 +1,6 @@
-import { WorkGrid } from "@/components/work-grid";
 import { getWorksForHire } from "@/data/works";
+import { HomeClient } from "./home-client";
 
 export default function ForHirePage() {
-  return <WorkGrid works={getWorksForHire()} />;
+  return <HomeClient works={getWorksForHire()} />;
 }

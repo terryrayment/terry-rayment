@@ -64,9 +64,11 @@ interface WorkCardProps {
   work: Work;
   onClick: () => void;
   variant?: "hire" | "fun";
+  revealed?: boolean;
+  animationDelay?: number;
 }
 
-export function WorkCard({ work, onClick, variant = "hire" }: WorkCardProps) {
+export function WorkCard({ work, onClick, variant = "hire", revealed = true, animationDelay = 0 }: WorkCardProps) {
   const zoom = work.scale ?? DEFAULT_COVER_ZOOM;
   const scaled = Math.abs(zoom - 1) > 0.001;
   const meta = useMemo(
@@ -179,6 +181,11 @@ export function WorkCard({ work, onClick, variant = "hire" }: WorkCardProps) {
       className={`group/work w-full outline-none ring-offset-2 ring-offset-[var(--bg)] focus-visible:ring-1 focus-visible:ring-[var(--text)] ${
         isFun ? "flex w-full flex-col items-center text-center" : "text-left"
       }`}
+      style={{
+        opacity: revealed ? 1 : 0,
+        transform: revealed ? "translateY(0)" : "translateY(8px)",
+        transition: `opacity 0.5s ease ${animationDelay}ms, transform 0.5s ease ${animationDelay}ms`,
+      }}
     >
       {isFun ? (
         <div className="mx-auto w-full max-w-[min(100%,34rem)]">

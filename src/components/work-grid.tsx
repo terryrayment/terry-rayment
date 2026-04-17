@@ -11,9 +11,11 @@ interface WorkGridProps {
   works: Work[];
   /** Fun tab: larger frames, title-only labels, centered. */
   variant?: "hire" | "fun";
+  /** Trigger staggered fade-in of cards. */
+  revealed?: boolean;
 }
 
-export function WorkGrid({ works: items, variant = "hire" }: WorkGridProps) {
+export function WorkGrid({ works: items, variant = "hire", revealed = true }: WorkGridProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [filter, setFilter] = useState<DurationFilter>("all");
 
@@ -57,6 +59,8 @@ export function WorkGrid({ works: items, variant = "hire" }: WorkGridProps) {
             work={work}
             variant={variant}
             onClick={() => setActiveIndex(i)}
+            animationDelay={i * 60}
+            revealed={revealed}
           />
         ))}
       </div>
