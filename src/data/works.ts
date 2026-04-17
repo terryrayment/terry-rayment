@@ -7,6 +7,8 @@ export interface Work {
   muxPlaybackId?: string;
   /** Vimeo numeric video id when not on Mux yet (e.g. public Vimeo URL). */
   vimeoVideoId?: string;
+  /** Direct video URL (e.g. Wiredrive MP4). Temporary — migrate to Mux when possible. */
+  videoSrc?: string;
   /**
    * `fun` = short films on the For Fun tab; omit or `hire` = For Hire (commercial / branded).
    */
@@ -278,7 +280,7 @@ export const works: Work[] = [
     client: "FORD",
     title: "DRIVEN BY MORE",
     category: "COMMERCIAL",
-    muxPlaybackId: "", // TODO: add Mux or Vimeo ID
+    videoSrc: "https://download.wiredrive.com/asset/assetId/152961219/size/primary/ts/1763055230/type/library/client/WD-WV2DA/Ford+-+Driven+By+More+-+TR.mp4?token=df256995b&category=pres&action=view",
     scale: 1,
     duration: "medium",
     lightboxCredit: "SHOT TRUCK UNIT — DIR. CALEB SLAIN",
@@ -337,5 +339,5 @@ export function getWorksForFun(): Work[] {
 
 /** Stable React key / workprint seed for Mux or Vimeo-backed pieces. */
 export function workMediaKey(work: Work): string {
-  return work.muxPlaybackId ?? `vimeo-${work.vimeoVideoId ?? work.id}`;
+  return work.muxPlaybackId ?? (work.vimeoVideoId ? `vimeo-${work.vimeoVideoId}` : work.videoSrc ?? work.id);
 }

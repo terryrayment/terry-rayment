@@ -110,6 +110,14 @@ export function WorkModal({
               allowFullScreen
             />
           </div>
+        ) : work.videoSrc ? (
+          <video
+            key={work.videoSrc}
+            src={work.videoSrc}
+            autoPlay
+            controls
+            className="aspect-video w-full shrink-0 bg-black"
+          />
         ) : null}
         {work.lightboxDescription ? (
           <p className="mt-10 w-[min(35vw,100%)] self-start whitespace-pre-line text-left text-[11px] font-normal leading-[1.65] tracking-normal text-white/80 normal-case">

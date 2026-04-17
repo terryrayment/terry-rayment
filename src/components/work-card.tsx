@@ -125,6 +125,15 @@ export function WorkCard({ work, onClick, variant = "hire", revealed = true, ani
               className="pointer-events-none absolute inset-0 h-full w-full border-0 object-cover"
               allow="autoplay; fullscreen; picture-in-picture"
             />
+          ) : work.videoSrc ? (
+            <video
+              src={work.videoSrc}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="block h-full w-full object-cover object-center"
+            />
           ) : null}
         </div>
 
