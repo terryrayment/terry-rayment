@@ -48,7 +48,7 @@ export default function AboutPage() {
       <div
         style={{
           position: "fixed",
-          top: "5rem",
+          top: "8rem",
           right: "1.5rem",
           width: "180px",
           height: "180px",
