@@ -20,6 +20,7 @@ function ScratchText({ children }: { children: React.ReactNode }) {
     if (!canvas || !container) return;
 
     const rect = container.getBoundingClientRect();
+    if (rect.width === 0) return; // not measured yet
     const pad = 10;
     canvas.width = Math.ceil(rect.width) + pad * 2;
     canvas.height = Math.ceil(rect.height) + pad * 2;
@@ -35,6 +36,13 @@ function ScratchText({ children }: { children: React.ReactNode }) {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     initializedRef.current = true;
   };
+
+  // Initialize as soon as the text is measured
+  useEffect(() => {
+    const id = requestAnimationFrame(() => initCanvas());
+    return () => cancelAnimationFrame(id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const scratch = (x: number, y: number) => {
     if (doneRef.current) return;
@@ -89,7 +97,6 @@ function ScratchText({ children }: { children: React.ReactNode }) {
             transition: "opacity 0.5s ease",
             pointerEvents: fadeOut ? "none" : "auto",
           }}
-          onMouseEnter={initCanvas}
           onMouseDown={(e) => {
             initCanvas();
             scratchingRef.current = true;
