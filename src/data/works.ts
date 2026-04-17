@@ -49,7 +49,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "01lMLNuT00V4Lc800S91VfpQHL5IA1d7t1MLmsPBdWX4OE",
     scale: 1.7,
-    duration: "short",
+    duration: "medium",
   },
   {
     id: "w004",
@@ -193,7 +193,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "ZS1pcXccM7zvfRGygTovnPNp801zbfJP027DV6emJWCMM",
     scale: 1.7,
-    duration: "short",
+    duration: "medium",
   },
   {
     id: "w018",
@@ -220,7 +220,7 @@ export const works: Work[] = [
     category: "COMMERCIAL",
     muxPlaybackId: "buS5LOZv9jL656A00gBKIwv8UbYmFvXtofFiK01xQgIj8",
     scale: 1.344,
-    duration: "short",
+    duration: "medium",
   },
   {
     id: "w022",
