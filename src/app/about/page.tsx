@@ -44,29 +44,26 @@ export default function AboutPage() {
   return (
     <div className="w-full pt-16 text-left md:pt-24 lg:pt-28 pr-[min(28vw,14rem)] md:pr-[min(32vw,16rem)] pb-8 relative">
 
-      {/* Right panel — photo at top, clock centered below */}
+      {/* Photos — fixed top-right, independent of clock */}
       <div
-        className="fixed right-0 top-0 h-full flex flex-col pointer-events-none select-none overflow-hidden"
-        style={{ width: "min(28vw, 14rem)" }}
+        className="fixed top-0 right-0 pointer-events-none select-none"
+        style={{ width: "min(28vw, 14rem)", maxWidth: "224px" }}
       >
-
-        {/* Stacked photos: Before sets height, After fades in on scroll */}
-        <div className="relative w-full flex-shrink-0">
-          {/* Before — natural flow, defines container height */}
+        <div className="relative w-full">
           <img
             src="/Terry_Before.png"
             alt=""
             draggable={false}
             style={{ display: "block", width: "100%", height: "auto" }}
           />
-          {/* After — overlaid on top, fades in as you scroll */}
           <img
             src="/Terry_After.png"
             alt=""
             draggable={false}
             style={{
               position: "absolute",
-              inset: 0,
+              top: 0,
+              left: 0,
               width: "100%",
               height: "100%",
               objectFit: "cover",
@@ -77,9 +74,10 @@ export default function AboutPage() {
             }}
           />
         </div>
+      </div>
 
-        {/* Clock */}
-        <div className="flex-1 flex flex-col items-center justify-center">
+      {/* Clock — fixed right, centered vertically */}
+      <div className="fixed right-0 top-0 h-full flex flex-col items-center justify-center pointer-events-none select-none" style={{ width: "min(28vw, 14rem)", maxWidth: "224px" }}>
           <div
             style={{
               fontSize: "clamp(2.5rem, 5vw, 4.5rem)",
@@ -101,7 +99,6 @@ export default function AboutPage() {
           >
             THANK YOU FOR YOUR PATIENCE
           </div>
-        </div>
       </div>
 
       <div className="max-w-[486px]">
