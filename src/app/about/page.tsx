@@ -44,37 +44,48 @@ export default function AboutPage() {
   return (
     <div className="w-full pt-16 text-left md:pt-24 lg:pt-28 pr-[min(28vw,14rem)] md:pr-[min(32vw,16rem)] pb-8 relative">
 
-      {/* Photo panel — fixed top-right */}
+      {/* Photo panel — fixed top-right with margin */}
       <div
         style={{
           position: "fixed",
-          top: 0,
-          right: 0,
-          width: "224px",
+          top: "5rem",
+          right: "1.5rem",
+          width: "180px",
+          height: "180px",
           zIndex: 10,
           pointerEvents: "none",
           userSelect: "none",
+          overflow: "hidden",
         }}
       >
-        {/* After — always on bottom, always visible */}
+        {/* After — always visible on bottom */}
         <img
           src="/Terry_After.png"
           alt=""
           draggable={false}
-          style={{ display: "block", width: "100%", height: "auto" }}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "180px",
+            height: "180px",
+            objectFit: "cover",
+            objectPosition: "top",
+          }}
         />
-        {/* Before — on top, fades out as you scroll, revealing After */}
+        {/* Before — on top, fades out revealing After as you scroll */}
         <img
           src="/Terry_Before.png"
           alt=""
           draggable={false}
           style={{
-            display: "block",
-            width: "100%",
-            height: "auto",
             position: "absolute",
             top: 0,
             left: 0,
+            width: "180px",
+            height: "180px",
+            objectFit: "cover",
+            objectPosition: "top",
             opacity: 1 - scrollProgress,
             transition: "opacity 0.15s linear",
           }}
