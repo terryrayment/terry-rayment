@@ -50,22 +50,16 @@ export default function AboutPage() {
         style={{ width: "min(28vw, 14rem)" }}
       >
 
-        {/* Stacked photos: Before always visible, After fades in on scroll */}
-        <div className="relative w-full flex-shrink-0" style={{ aspectRatio: "1 / 1.25" }}>
+        {/* Stacked photos: Before sets height, After fades in on scroll */}
+        <div className="relative w-full flex-shrink-0">
+          {/* Before — natural flow, defines container height */}
           <img
             src="/Terry_Before.png"
             alt=""
             draggable={false}
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              objectPosition: "top",
-              display: "block",
-            }}
+            style={{ display: "block", width: "100%", height: "auto" }}
           />
+          {/* After — overlaid on top, fades in as you scroll */}
           <img
             src="/Terry_After.png"
             alt=""
