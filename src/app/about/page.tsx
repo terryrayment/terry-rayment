@@ -45,22 +45,42 @@ export default function AboutPage() {
     <div className="w-full pt-16 text-left md:pt-24 lg:pt-28 pr-[min(28vw,14rem)] md:pr-[min(32vw,16rem)] pb-8 relative">
 
       {/* Right panel — photo at top, clock centered below */}
-      <div className="fixed right-0 top-0 h-full flex flex-col items-center w-[min(28vw,14rem)] md:w-[min(32vw,16rem)] pointer-events-none select-none">
+      <div
+        className="fixed right-0 top-0 h-full flex flex-col pointer-events-none select-none overflow-hidden"
+        style={{ width: "min(28vw, 14rem)" }}
+      >
 
         {/* Stacked photos: Before always visible, After fades in on scroll */}
-        <div className="relative w-full">
+        <div className="relative w-full flex-shrink-0" style={{ aspectRatio: "1 / 1.25" }}>
           <img
             src="/Terry_Before.png"
             alt=""
-            className="w-full block"
             draggable={false}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "top",
+              display: "block",
+            }}
           />
           <img
             src="/Terry_After.png"
             alt=""
-            className="absolute inset-0 w-full block"
             draggable={false}
-            style={{ opacity: scrollProgress, transition: "opacity 0.1s linear" }}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "top",
+              display: "block",
+              opacity: scrollProgress,
+              transition: "opacity 0.1s linear",
+            }}
           />
         </div>
 
