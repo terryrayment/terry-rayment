@@ -18,6 +18,8 @@ export interface Work {
   scale?: number;
   /** Optional copy shown under the video in the modal lightbox. */
   lightboxDescription?: string;
+  /** Optional small credit line shown under the title in the modal header. */
+  lightboxCredit?: string;
   /** Duration category for filtering on the hire grid.
    *  short = under 31s, medium = 31s–2min, long = over 2min */
   duration?: "short" | "medium" | "long";
@@ -270,6 +272,16 @@ export const works: Work[] = [
     section: "fun",
     lightboxDescription:
       "In 2013 I went out for a month to make something about what it actually feels like to work in the creative industry.\n\nWe talked to people who were genuinely willing to be transparent about the mess of it and the pursuit of something you believe in inside a system that doesn't always believe in the same things you do",
+  },
+  {
+    id: "w031",
+    client: "FORD",
+    title: "DRIVEN BY MORE",
+    category: "COMMERCIAL",
+    muxPlaybackId: "", // TODO: add Mux or Vimeo ID
+    scale: 1,
+    duration: "medium",
+    lightboxCredit: "SHOT TRUCK UNIT — DIR. CALEB SLAIN",
   },
   {
     id: "w028",

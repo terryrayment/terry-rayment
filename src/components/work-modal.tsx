@@ -55,6 +55,11 @@ export function WorkModal({
               <span className="font-normal">{work.title}</span>
             </>
           )}
+          {work.lightboxCredit && (
+            <div className="mt-1 opacity-50 font-normal tracking-[0.06em] normal-case">
+              {work.lightboxCredit}
+            </div>
+          )}
         </div>
         <button
           onClick={onClose}
