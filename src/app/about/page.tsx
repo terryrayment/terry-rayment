@@ -44,22 +44,21 @@ export default function AboutPage() {
   return (
     <div className="w-full pt-16 text-left md:pt-24 lg:pt-28 pr-[min(28vw,14rem)] md:pr-[min(32vw,16rem)] pb-8 relative">
 
-      {/* Photos — fixed top-right */}
-      <div className="fixed top-0 right-0 w-[min(28vw,14rem)] md:w-[min(32vw,16rem)] overflow-hidden pointer-events-none select-none">
-        <div className="relative w-full">
-          <img
-            src="/Terry_Before.png"
-            alt=""
-            className="block w-full h-auto"
-          />
-          <img
-            src="/Terry_After.png"
-            alt=""
-            className="absolute inset-0 block w-full h-full object-cover object-top"
-            style={{ opacity: scrollProgress, transition: "opacity 0.15s linear" }}
-          />
-        </div>
-      </div>
+      {/* Terry Before — always visible, fixed top-right */}
+      <img
+        src="/Terry_Before.png"
+        alt=""
+        draggable={false}
+        className="fixed top-0 right-0 w-[min(28vw,14rem)] md:w-[min(32vw,16rem)] pointer-events-none select-none block"
+      />
+      {/* Terry After — same position, fades in as you scroll to bottom */}
+      <img
+        src="/Terry_After.png"
+        alt=""
+        draggable={false}
+        className="fixed top-0 right-0 w-[min(28vw,14rem)] md:w-[min(32vw,16rem)] pointer-events-none select-none block"
+        style={{ opacity: scrollProgress, transition: "opacity 0.15s linear" }}
+      />
 
       {/* Clock — fixed right, centered vertically */}
       <div className="fixed right-0 top-0 h-full flex flex-col items-center justify-center w-[min(28vw,14rem)] md:w-[min(32vw,16rem)] pointer-events-none select-none">
